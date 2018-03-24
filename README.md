@@ -16,10 +16,16 @@ Includes
 * auth wrapper to secure all /v1/* api routes
 * and a whole load of other magic....
 
-Enjoy.
-
 I'll be updating this project over time as I continue down the road of react.
 
 If you see any glaring errors or things that you'd improve drop me a pull-request, if I meet you in person I'll buy you a pint.
 
 Enjoy!
+
+## .env
+
+The server relies on the .env file to set all it's environment attributes, you'll see a basic one under .env-dev
+
+So before you begin, copy .env-dev to .env
+
+    cp .env-dev .env
