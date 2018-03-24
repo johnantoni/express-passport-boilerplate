@@ -53,12 +53,12 @@ var sessionOptions = {
 app.use(cookieParser(sessionOptions.secret)); // read cookies (needed for auth)
 app.use(session(sessionOptions));
 
-const Users = require('./models/users');
+const User = require('./models/user');
 const passport = require('passport');
 
-passport.use(Users.createStrategy());
-passport.serializeUser(Users.serializeUser());
-passport.deserializeUser(Users.deserializeUser());
+passport.use(User.createStrategy());
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -81,6 +81,13 @@ app.options('*', cors(corsOptions))
 
 // apply authenticationRequired to all /v1/* routes
 app.use('/v1/*', require('./requireLogin'))
+
+// secure
+app.use('/v1/', require('./api/invoice'));
+app.use('/v1/', require('./api/client'));
+
+// insecure
+app.use('/p1', require('./api/auth'));
 
 // make media directory public
 app.use('/media', express.static(path.join(__dirname, 'media')))
