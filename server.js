@@ -85,6 +85,7 @@ app.use('/v1/*', require('./requireLogin'))
 // secure
 app.use('/v1/', require('./api/invoice'));
 app.use('/v1/', require('./api/client'));
+app.use('/v1/', require('./api/log'));
 
 // insecure
 app.use('/p1', require('./api/auth'));
