@@ -12,6 +12,7 @@ const session = require('express-session');
 const compression = require('compression')
 const MongoStore = require('connect-mongo')(session);
 const helmet = require('helmet')
+const router = require('./lib/routes')
 require('dotenv').config();
 const app = express();
 
@@ -53,7 +54,7 @@ var sessionOptions = {
 app.use(cookieParser(sessionOptions.secret)); // read cookies (needed for auth)
 app.use(session(sessionOptions));
 
-const User = require('./models/user');
+const User = require('./lib/models/user');
 const passport = require('passport');
 
 passport.use(User.createStrategy());
@@ -79,16 +80,7 @@ var corsOptions = {
 // enable cors pre-flight across the board
 app.options('*', cors(corsOptions))
 
-// apply authenticationRequired to all /v1/* routes
-app.use('/v1/*', require('./requireLogin'))
-
-// secure
-app.use('/v1/', require('./api/invoice'));
-app.use('/v1/', require('./api/client'));
-app.use('/v1/', require('./api/log'));
-
-// insecure
-app.use('/p1', require('./api/auth'));
+app.use(router)
 
 // make media directory public
 app.use('/media', express.static(path.join(__dirname, 'media')))
