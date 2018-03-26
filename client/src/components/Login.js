@@ -17,7 +17,7 @@ class Login extends Component {
     axios
         // 1. POST to /auth/login, passing in the email and password in the body
         .post("/p1/auth/login", {
-          data: {
+          user: {
             email,
             password
           },
